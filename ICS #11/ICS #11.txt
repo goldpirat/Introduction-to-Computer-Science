@@ -1,0 +1,75 @@
+Author: Flori Kusari
+Assignment: ICS #11
+Date: 23/11/2023
+
+
+Problem 11.1:
+a)
+
+mulsi3:
+    # Initialize the result to zero
+    li a0, 0 
+
+    multiplicity_loop:
+    
+    # If a is zero, exit the loop
+    beqz a0, multiplicity_exit
+
+    # If a is odd, then the lowest order bit of a is 1
+    andi t0, a0, 1
+
+    # Branch if == to zero
+    beqz t0, skip
+
+    # Result = Result + a1
+    add a0, a0, a1
+
+    skip:
+
+    # Right bit shift a by 1 position
+    srl a0, a0, 1
+
+    # Left bit shift a by 1 position
+    sll a1, a1, 1
+
+    # Jump to loop (aka Repeat the Loop)
+    j multiplicity_loop
+
+    multiplicity_exit:
+    # Return: Result is already in a0    
+    ret
+
+
+Used Instructions:
+li -> Load Immediate
+beqz -> Branch IF == Zero
+andi -> AND Immediate
+add -> Add (Desc:rd = rs1 + rs2)
+srl -> Shift Right Logical
+sll -> Shift Left Logical
+j -> Jump TO
+ret -> Return
+
+
+b)
+Function Call Prologue: It is like setting up what will be needed for the task at hand, it is a preparation, a sort of instruction, on what the computer should be prepared for.
+Function Call Epilogue: After the job is done, the space and the preparations may be used for something else later so the epilogue is there as a way of cleaning up after
+the function has already been used and ensures nothing got messed up.
+
+Explanation via Party Analogy:
+
+Prologue: Reserving the space, setting up the area, and writing signs about where people will stay and what they will do.
+Epilogue: After the party is over and you've had your fun, you are supposed to clean up and make sure that all used things are cleaned so that someday you may throw another party,
+just as easily with no problems coming up from the previous party.
+
+
+c)
+
+Used Registers: "a0", "a1", and "t0".
+It is true that these registers don't get used for across-function calls so no need to save them; however, knowing the purpose of the function, it could be argued that a prologue,
+might be needed to ensure that no errors occur.
+Since there are no memory space allocations for local variables, no epilogue is needed. So, in general, an epilogue and prologue are not necessary by any means, however, having them could certainly be reasoned if the function is expanded upon somehow. Such as introducing a new method of multiplication by other numbers such as irrational numbers which would be more difficult.
+
+
+
+Problems 11.2 and 11.3 might not be submitted because I have already reached the necessary credits. 

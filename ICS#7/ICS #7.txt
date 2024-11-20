@@ -1,0 +1,79 @@
+-- Author: Flori Kusari
+
+import Test.HUnit
+
+-- In this code I will highlight which part of the question
+-- is being answered by typing a), b), and c) next to the part
+-- which answers the specific questions.
+-- Table of Substitution given in the question.
+substitutionTable :: [(Char, Char)]
+substitutionTable =
+  [ ('a', '@')
+  , ('b', '8')
+  , ('c', '(')
+  , ('d', '6')
+  , ('e', '3')
+  , ('f', '{')
+  , ('g', '9')
+  , ('h', '#')
+  , ('i', '1')
+  , ('l', '!')
+  , ('o', '0')
+  , ('q', '2')
+  , ('s', '$')
+  , ('x', '%')
+  , ('y', '?')
+  ]
+
+-- a)
+-- Apply character substitution to a single character.
+encChar :: Char -> Char
+encChar c = case lookup c substitutionTable of
+  Just replacement -> replacement
+  Nothing -> c
+
+-- b)
+-- Inversing the character substitution for a single character.
+decChar :: Char -> Char
+decChar c = case lookup c (map (\(a, b) -> (b, a)) substitutionTable) of
+  Just original -> original
+  Nothing -> c
+
+-- c) Testing the string substitution function enc.
+enc :: [Char] -> [Char]
+enc = map encChar
+
+-- c) Testing the string substitution function dec.
+dec :: [Char] -> [Char]
+dec = map decChar
+
+-- TESTING EVERYTHING
+
+-- a) Testing the encChar function.
+testSubstitution :: Test
+testSubstitution = TestList
+  [ "Test 'charA' => 'charAt'" ~: encChar 'a' ~?= '@'
+  , "Test 'charH' => 'charHash'" ~: encChar 'h' ~?= '#'
+  , "Test 'charZ' => 'charZ' (no substitution)" ~: encChar 'z' ~?= 'z'
+  ]
+
+-- b) Testing the decChar function.
+testInverse :: Test
+testInverse = TestList
+  [ "Test 'charAt' => 'charA'" ~: decChar '@' ~?= 'a'
+  , "Test 'charHash' => 'charH'" ~: decChar '#' ~?= 'h'
+  , "Test 'charZ' => 'charZ' (no substitution)" ~: decChar 'z' ~?= 'z'
+  ]
+
+-- c) Testing the enc function.
+testSubstituteText :: Test
+testSubstituteText = "Test 'texthello' => 't3%t#3!!0'" ~: enc "texthello" ~?= "t3%t#3!!0"
+
+-- c) Testing the dec function.
+testRestoreText :: Test
+testRestoreText = "Test 't3%t#3!!0' => 'texthello'" ~: dec "t3%t#3!!0" ~?= "texthello"
+
+main :: IO ()
+main = do
+  runTestTT $ TestList [testSubstitution, testInverse, testSubstituteText, testRestoreText]
+  return ()

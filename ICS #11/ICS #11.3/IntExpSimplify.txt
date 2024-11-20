@@ -1,0 +1,26 @@
+module IntExpSimplify where
+
+import IntExp
+
+simplify :: Exp -> Exp
+-- Rule S1 and P1
+simplify (S (C a) (C b)) = C (a + b)
+simplify (P (C a) (C b)) = C (a * b)
+-- Rule S2
+simplify (S (C 0) e) = simplify e
+simplify (S e (C 0)) = simplify e
+-- Rule S3
+simplify (S (C a) (S (C b) e)) = simplify (S (C (a + b)) e)
+simplify (S (S (C b) e) (C a)) = simplify (S (C (a + b)) e)
+-- Rule P2
+simplify (P (C 1) e) = simplify e
+simplify (P e (C 1)) = simplify e
+-- Rule P3
+simplify (P (C 0) _) = C 0
+simplify (P _ (C 0)) = C 0
+-- Rule P4
+simplify (P (C a) (P (C b) e)) = simplify (P (C (a * b)) e)
+simplify (P (P (C b) e) (C a)) = simplify (P (C (a * b)) e)
+-- Base case
+simplify e = e
+

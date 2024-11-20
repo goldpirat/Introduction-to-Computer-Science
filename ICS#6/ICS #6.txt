@@ -1,0 +1,28 @@
+-- Author: Flori Kusari
+
+module Main (main) where
+
+import Test.HUnit
+
+-- The function diet implements the rules directly.
+diet :: Bool -> Bool -> Bool -> Bool
+diet True True True = False
+diet True True False = True
+diet True False True = True
+diet True False False = True
+diet False True True = False
+diet False True False = False
+diet False False True = False
+diet False False False = False
+
+-- The function diet' implements the simplified formula.
+diet' :: Bool -> Bool -> Bool -> Bool
+diet' b f i = b && (not f || not i)
+
+truthTable :: (Bool -> Bool -> Bool -> Bool) -> [(Bool, Bool, Bool, Bool)]
+truthTable z = [(b, f, i, z b f i) | b <- [False, True], f <- [False, True], i <- [False, True]]
+
+-- Test whether the two truth tables returned are the same.
+dietTests = TestList [truthTable diet ~?= truthTable diet']
+
+main = runTestTT dietTests

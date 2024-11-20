@@ -1,0 +1,7 @@
+b)
+<EXP> ::= "0" | "1" | <VAR> | <EXP> "'" | "(" <WS> <OBJECT> <WS> "*" <WS> <OBJECT> <WS> ")" | "(" <WS> <OBJECT> <WS> "+" <WS> <OBJECT> <WS> ")"
+<OBJECT> ::= <EXP> | <DIGIT> | <NATURAL_NUMBER> | <VAR>
+<VAR> ::= "X" <NATURAL_NUMBER>
+<NATURAL_NUMBER> ::= <DIGIT> | <DIGIT> <NATURAL_NUMBER>
+<DIGIT> ::= "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"
+<WS> ::= " " | <WS> " "

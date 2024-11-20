@@ -1,0 +1,10 @@
+module IntExpRender where
+
+import Test.HUnit
+import IntExp
+
+render :: Exp -> String
+render (C n) = show n                -- render a constant
+render (V x) = x                     -- render a variable
+render (S e1 e2) = "(" ++ render e1 ++ " + " ++ render e2 ++ ")" -- render a sum
+render (P e1 e2) = "(" ++ render e1 ++ " * " ++ render e2 ++ ")" -- render a product
